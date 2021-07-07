@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from sys import argv, stderr
+from os.path import join, abspath
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 
@@ -9,16 +10,18 @@ if len(argv) < 3:
     print(f"Usage: {argv[0]} [path of hostfile] [file to copy]", file=stderr)
     exit(1)
 
-if not argv[2].startswith("/"):
-    print("File to be copied is not an absolute path.", file=stderr)
-    exit(2)
+file = argv[2]
+
+if not file.startswith("/"):
+    file = abspath(file)
+    print("File to be copied is not an absolute path. Changing to", file)
 
 # Transfer file
 
 current_ip = subprocess.run(["hostname", "-I"], stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
 
 def transfer(ip):
-    returncode = subprocess.run(["scp", argv[2], f"{ip}:{argv[2]}"]).returncode
+    returncode = subprocess.run(["scp", file, f"{ip}:{file}"]).returncode
     print("Exit code for", ip, "-", returncode)
 
 with open(argv[1], 'r') as f:
