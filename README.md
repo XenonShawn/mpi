@@ -16,7 +16,7 @@ adduser mpiuser
 ```bash
 ssh-keygen -t rsa
 
-// Repeat the following for every slave node
+# Repeat the following for every slave node
 cat ~/.ssh/id_rsa.pub | ssh mpiuser@IP-ADDRESS "mkdir ~/.ssh; cat >> .ssh/authorized_keys"
 ```
 
@@ -29,6 +29,6 @@ nano machines
 
 4. To run a script:
 ```bash
-// To run as mpiuser, prefix `sudo -u mpiuser` to the command
+# To run as mpiuser, prefix `sudo -u mpiuser` to the command
 mpiexec -hostfile machines --use-hwthread-cpus python3 [absolute path of script]
 ```
