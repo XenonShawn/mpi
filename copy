@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from sys import argv, stderr
-from os.path import join, abspath
+from os.path import abspath
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 
